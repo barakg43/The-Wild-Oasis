@@ -96,18 +96,5 @@ function Window({ children, name }) {
 
 Modal.Open = Open;
 Modal.Window = Window;
-// function Modal({ children, onClose }) {
-//   return createPortal(
-//     <Overlay>
-//       <StyledModal>
-//         <Button onClick={onClose}>
-//           <HiXMark />
-//         </Button>
-//         <div>{children}</div>
-//       </StyledModal>
-//     </Overlay>,
-//     document.body
-//   );
-// }
 
 export default Modal;
