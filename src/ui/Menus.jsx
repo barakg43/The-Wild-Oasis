@@ -30,13 +30,11 @@ const StyledToggle = styled.button`
 `;
 
 const StyledList = styled.ul`
-  position: fixed;
+  position: absolute;
+  z-index: 1000;
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-md);
   border-radius: var(--border-radius-md);
-  transform: translateX(min(var(--mouse-x), calc(100vw - 100%)))
-    translateY(min(var(--mouse-y), calc(100vh - 100%)));
-
   right: ${(props) => props.position.x}px;
   top: ${(props) => props.position.y}px;
 `;
