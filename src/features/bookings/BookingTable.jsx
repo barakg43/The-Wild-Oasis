@@ -7,7 +7,6 @@ import Spinner from "../../ui/Spinner";
 
 function BookingTable() {
   const { bookings, isLoading } = useBookings();
-
   if (!bookings || !bookings.length) return <Empty resource="bookings" />;
   if (isLoading) return <Spinner />;
   return (
