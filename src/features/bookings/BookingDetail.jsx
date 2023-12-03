@@ -11,8 +11,16 @@ import ButtonText from "../../ui/ButtonText";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useBookingData } from "./UseBookingData";
 import Spinner from "../../ui/Spinner";
-import { HiArrowDownOnSquare } from "react-icons/hi2";
+import {
+  HiArrowDownOnSquare,
+  HiArrowUpOnSquare,
+  HiTrash,
+} from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
+import { useCheckout } from "../check-in-out/useCheckout";
+import ConfirmDelete from "../../ui/ConfirmDelete";
+import Modal from "../../ui/Modal";
+import { useDeleteBooking } from "./useDeleteBooking";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -22,6 +30,9 @@ const HeadingGroup = styled.div`
 
 function BookingDetail() {
   const { booking, isLoading } = useBookingData();
+  const { checkout, isCheckOut } = useCheckout();
+  const { isDeleting, deleteBooking } = useDeleteBooking();
+
   const navigate = useNavigate();
 
   const moveBack = useMoveBack();
@@ -46,9 +57,23 @@ function BookingDetail() {
       <BookingDataBox booking={booking} />
 
       <ButtonGroup>
-        <Button variation="secondary" onClick={moveBack}>
-          Back
-        </Button>
+        <Modal>
+          <Modal.Open opens="delete-confirmation-booking">
+            <Button icon={<HiTrash />} variation="danger">
+              Delete
+            </Button>
+          </Modal.Open>
+          <Modal.Window name="delete-confirmation-booking">
+            <ConfirmDelete
+              resourceName={`booking #${bookingId}`}
+              onConfirm={() => {
+                deleteBooking(bookingId, { onSettled: () => navigate(-1) });
+              }}
+              disabled={isDeleting}
+            />
+          </Modal.Window>
+        </Modal>
+
         {status === "unconfirmed" && (
           <Button
             icon={<HiArrowDownOnSquare />}
@@ -57,6 +82,18 @@ function BookingDetail() {
             Check in
           </Button>
         )}
+        {status === "checked-in" && (
+          <Button
+            icon={<HiArrowUpOnSquare />}
+            onClick={() => checkout(bookingId)}
+            disabled={isCheckOut}
+          >
+            Check out
+          </Button>
+        )}
+        <Button variation="secondary" onClick={moveBack}>
+          Back
+        </Button>
       </ButtonGroup>
     </>
   );
