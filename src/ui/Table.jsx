@@ -92,7 +92,9 @@ function Body({ data, render }) {
   return <StyledBody>{data.map(render)}</StyledBody>;
 }
 
+Table.Footer = Footer;
 Table.Header = Header;
 Table.Body = Body;
 Table.Row = Row;
+
 export default Table;
