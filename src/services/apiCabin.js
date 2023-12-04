@@ -8,8 +8,6 @@ export async function getCabins() {
     console.error(error);
     throw new Error("Cabin could not be loaded");
   }
-  // const data = JSON.parse(cabinsStr);
-  // console.log(JSON.stringify(data));
   return data;
 }
 

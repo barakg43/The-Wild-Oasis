@@ -7,6 +7,5 @@ export function useSettings() {
     error,
     data: settings,
   } = useQuery({ queryKey: ["settings"], queryFn: getSettings });
-  console.log(settings);
   return { isLoading, error, settings };
 }
